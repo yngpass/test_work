@@ -1,0 +1,42 @@
+Подготовил варианты решения проблемы: код и описания к нему.
+
+С помощью команды JOIN можно увидеть связь между таблицами.
+Данный код выведет записи, у которых поле `stock_id` из таблицы `availabilities` совпадает с полем `id` из таблицы `stocks`:
+SELECT `availabilities`.`id`, 
+	`availabilities`.`amount`, 
+    `availabilities`.`product_id`,
+    `availabilities`.`stock_id`,
+    `stocks`.`title`
+FROM `availabilities` LEFT JOIN `stocks` 
+ON `availabilities`.`stock_id` = `stocks`.`id`;
+
+Данный код выведет только те продукты, которые имеются в наличии:
+SELECT `availabilities`.`product_id`,
+	`products`.`title`,
+    `availabilities`.`amount`
+FROM `availabilities` INNER JOIN `products`
+ON `availabilities`.`product_id` = `products`.id;
+
+Данный код выведет категории и содержащиеся в них продукты:
+SELECT `categories`.`id`,
+	`categories`.`title`,
+    `products`.`title`
+FROM `categories` LEFT JOIN `products`
+ON `categories`.`id` = `products`.`category_id`;
+
+Пример внесения новой записи:
+INSERT INTO `products`(`id`, `title`, `category_id`) VALUES (
+    '11',
+    'Кресло офисное',
+    '9'
+);
+
+Пример изменения старой записи:
+UPDATE `products` SET 
+    `id`='1', 
+    `title`='Ручка шариковая', 
+    `category_id`='5' 
+WHERE `id` = 1;
+
+Пример удаления записи:
+DELETE FROM `categories` WHERE `categories`.`id` = 10;
